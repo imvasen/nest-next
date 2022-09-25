@@ -8,3 +8,6 @@ function getPort(port = Number(process.env.PORT)): number {
 }
 
 export const PORT = getPort();
+
+export const LOG_LEVEL = process.env.LOG_LEVEL;
+export const NODE_ENV = process.env.NODE_ENV ?? 'development';
