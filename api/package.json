@@ -24,12 +24,17 @@
     "@nestjs/common": "^9.0.0",
     "@nestjs/core": "^9.0.0",
     "@nestjs/platform-express": "^9.0.0",
+    "@nestjs/typeorm": "^9.0.1",
+    "cache-manager": "^4.1.0",
+    "cache-manager-redis-store": "^2.0.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.13.2",
     "dotenv": "^16.0.2",
+    "pg": "^8.8.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
+    "typeorm": "^0.3.10",
     "winston": "^3.8.2"
   },
   "devDependencies": {
@@ -70,6 +75,7 @@
       ".*\\.module\\.(t|j)s",
       "<rootDir>/src/(main)|(config)\\.ts",
       "<rootDir>/src/common/http\\.(filter)|(interceptor)\\.ts",
+      "<rootDir>/dist/*",
       "index.ts"
     ],
     "testRegex": ".*\\.spec\\.ts$",
@@ -77,7 +83,7 @@
       "^.+\\.(t|j)s$": "ts-jest"
     },
     "collectCoverageFrom": [
-      "**/*.(t|j)s"
+      "<rootDir>/src/**/*.(t|j)s"
     ],
     "coverageDirectory": "<rootDir>/coverage",
     "testEnvironment": "node"

@@ -29,33 +29,55 @@
 ## Installation
 
 ```bash
-$ npm install
+$ pnpm install
 ```
 
 ## Running the app
 
+A `.env` file can be created to set up some stuff like log level, databases, etc.
+
+```bash
+# App env
+PORT=5000  # Default 3000
+LOG_LEVEL=debug  # Default info
+# Cache
+# If REDIS_HOST not set, it'll use local memory to cache stuff
+REDIS_HOST=localhost
+REDIS_PORT=6379
+# DB
+POSTGRES_HOST=localhost
+POSTGRES_USER=your_user
+POSTGRES_PASSWORD=your_password
+POSTGRES_DB=your_db
+POSTGRES_PORT=5432
+# GeoLocation API Key
+GEO_LOCATION_API_KEY=<Get it from https://api.geoapify.com/v1/ipinfo>
+# Used to fulfill cities data
+COUNTRY_REPO_URL=https://raw.githubusercontent.com/imvasen/countries-states-cities-data/master/countries%2Bstates%2Bcities.json
+```
+
 ```bash
 # development
-$ npm run start
+$ pnpm run start
 
 # watch mode
-$ npm run start:dev
+$ pnpm run start:dev
 
 # production mode
-$ npm run start:prod
+$ pnpm run start:prod
 ```
 
 ## Test
 
 ```bash
 # unit tests
-$ npm run test
+$ pnpm run test
 
 # e2e tests
-$ npm run test:e2e
+$ pnpm run test:e2e
 
 # test coverage
-$ npm run test:cov
+$ pnpm run test:cov
 ```
 
 ## Support
