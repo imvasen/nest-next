@@ -1,10 +1,20 @@
 import type { NextPage } from 'next';
-import Head from 'next/head';
 import Image from 'next/image';
+import Head from 'next/head';
 import React from 'react';
-import styles from '../styles/Home.module.css';
+
+import styles from '@web/styles/Home.module.css';
+import { apiFetch } from '@web/lib/typedFetch';
 
 const Home: NextPage = () => {
+  const [status, setStatus] = React.useState<string>();
+
+  React.useEffect(() => {
+    apiFetch<API.AppStatusResponse>('/api/status').then(({ data }) =>
+      setStatus(data.status),
+    );
+  }, [setStatus]);
+
   return (
     <div className={styles.container}>
       <Head>
@@ -17,6 +27,8 @@ const Home: NextPage = () => {
         <h1 className={styles.title}>
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
+
+        <p>{status ? `API Status: ${status}` : 'Connecting to API ...'}</p>
 
         <p className={styles.description}>
           Get started by editing{' '}
