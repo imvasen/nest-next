@@ -1,6 +1,7 @@
 import * as redisStore from 'cache-manager-redis-store';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { CacheModuleOptions } from '@nestjs/common';
+import { JwtSignOptions } from '@nestjs/jwt';
 import { config } from 'dotenv';
 config();
 
@@ -48,3 +49,8 @@ export const cache: CacheModuleOptions = {
       }
     : {}),
 };
+
+export const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
+export const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
+
+export const jwtOpts: JwtSignOptions = { secret: process.env.SECRET };

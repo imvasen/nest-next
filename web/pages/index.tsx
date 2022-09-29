@@ -1,3 +1,4 @@
+import { signIn, signOut, useSession } from 'next-auth/react';
 import type { NextPage } from 'next';
 import Image from 'next/image';
 import Head from 'next/head';
@@ -8,9 +9,10 @@ import { apiFetch } from '@web/lib/typedFetch';
 
 const Home: NextPage = () => {
   const [status, setStatus] = React.useState<string>();
+  const session = useSession();
 
   React.useEffect(() => {
-    apiFetch<API.AppStatusResponse>('/api/status').then(({ data }) =>
+    apiFetch<API.AppStatusResponse>('/status').then(({ data }) =>
       setStatus(data.status),
     );
   }, [setStatus]);
@@ -34,6 +36,24 @@ const Home: NextPage = () => {
           Get started by editing{' '}
           <code className={styles.code}>pages/index.tsx</code>
         </p>
+
+        {session.status === 'unauthenticated' && (
+          <div className={styles.auth}>
+            <a href="/api/auth/signin" onClick={() => signIn()}>
+              Sign In
+            </a>
+          </div>
+        )}
+        {session.status === 'authenticated' && (
+          <div className={styles.auth}>
+            <div>Hey, {session.data.user.name || session.data.user.email}</div>
+            <div>
+              <a href="/api/auth/signout" onClick={() => signOut()}>
+                Sign out
+              </a>
+            </div>
+          </div>
+        )}
 
         <div className={styles.grid}>
           <a href="https://nextjs.org/docs" className={styles.card}>

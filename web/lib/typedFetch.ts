@@ -1,3 +1,6 @@
+import { getSession } from 'next-auth/react';
+import { API_URL } from './constants';
+
 export interface ApiFetchResponse<T> {
   status: number;
   data: T;
@@ -9,11 +12,24 @@ export interface ApiFetchResponse<T> {
  * @param init Same as fetch.
  * @returns A parsed object.
  */
-export async function apiFetch<T = any>(
+export async function apiFetch<T = unknown, U = unknown>(
   input: RequestInfo | URL,
-  init?: RequestInit,
+  init?: Omit<RequestInit, 'body'> & { body?: U },
 ): Promise<ApiFetchResponse<T>> {
-  const response = await fetch(input, init);
+  const session = await getSession();
+
+  const response = await fetch(`${API_URL}/api/v1${input}`, {
+    ...init,
+    headers: {
+      ...init?.headers,
+      'Content-Type': 'application/json',
+      ...(session
+        ? { Authorization: `Bearer ${session.apiToken}` }
+        : undefined),
+    },
+    body: init?.body ? JSON.stringify(init.body) : undefined,
+  });
+
   return {
     status: response.status,
     data: (await response.json().catch(() => ({}))) as T,
