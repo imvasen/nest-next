@@ -9,6 +9,7 @@ import {
   Injectable,
 } from '@nestjs/common';
 
+import { JwtPayload } from '@api/auth/auth';
 import { Logger } from '@api/common';
 
 @Injectable()
@@ -25,7 +26,11 @@ export class HttpInterceptor implements NestInterceptor {
     return next.handle().pipe(
       tap(() => {
         const { statusCode } = context.switchToHttp().getResponse();
-        this.logger.http(`${method} ${path} (${statusCode})`);
+        const user: JwtPayload | undefined = context
+          .switchToHttp()
+          .getRequest().user;
+        const userStr = user ? `{user:${user.email}}` : '';
+        this.logger.http(`(${statusCode}) [${method} ${path}] ${userStr}`);
       }),
       catchError((err) => {
         if (err instanceof HttpException) {
