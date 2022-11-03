@@ -22,13 +22,19 @@
       "@web/*": [
         "./*"
       ]
-    }
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "../api/src/api.d.ts"
+    "../api/src/api.d.ts",
+    ".next/types/**/*.ts"
   ],
   "exclude": [
     "node_modules"

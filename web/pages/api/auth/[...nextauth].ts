@@ -1,5 +1,5 @@
-import GoogleProvider from 'next-auth/providers/google';
-import NextAuth, { NextAuthOptions } from 'next-auth';
+import GoogleProvider, { GoogleProfile } from 'next-auth/providers/google';
+import NextAuth, { CallbacksOptions, NextAuthOptions } from 'next-auth';
 import { Provider } from 'next-auth/providers';
 import { apiFetch } from '@web/lib/typedFetch';
 
@@ -28,7 +28,9 @@ const providers = (() => {
   return px;
 })();
 
-export const authOptions: NextAuthOptions = {
+export const authOptions: NextAuthOptions & {
+  callbacks: Partial<CallbacksOptions<GoogleProfile>>;
+} = {
   providers,
   callbacks: {
     session: async ({ session, token }) => {
@@ -39,7 +41,7 @@ export const authOptions: NextAuthOptions = {
     },
     jwt: async ({ account, profile, token, user }) => {
       // Initial sign in
-      if (account && user && profile) {
+      if (account && user && profile && 'given_name' in profile) {
         const { data } = await apiFetch<API.AuthSignInResponse>(
           `/auth/sign-in`,
           {
