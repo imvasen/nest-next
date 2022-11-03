@@ -4,18 +4,11 @@ import Image from 'next/image';
 import Head from 'next/head';
 import React from 'react';
 
+import StatusChecker from '@web/components/StatusChecker';
 import styles from '@web/styles/Home.module.css';
-import { apiFetch } from '@web/lib/typedFetch';
 
 const Home: NextPage = () => {
-  const [status, setStatus] = React.useState<string>();
   const session = useSession();
-
-  React.useEffect(() => {
-    apiFetch<API.AppStatusResponse>('/status').then(({ data }) =>
-      setStatus(data.status),
-    );
-  }, [setStatus]);
 
   return (
     <div className={styles.container}>
@@ -30,7 +23,7 @@ const Home: NextPage = () => {
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
 
-        <p>{status ? `API Status: ${status}` : 'Connecting to API ...'}</p>
+        <StatusChecker />
 
         <p className={styles.description}>
           Get started by editing{' '}
