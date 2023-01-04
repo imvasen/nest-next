@@ -16,16 +16,17 @@ export async function apiFetch<T = unknown, U = unknown>(
   input: RequestInfo | URL,
   init?: Omit<RequestInit, 'body'> & { body?: U },
 ): Promise<ApiFetchResponse<T>> {
-  const session = await getSession();
+  // const session = await getSession();
 
-  const response = await fetch(`${API_URL}/api/v1${input}`, {
+  // const response = await fetch(`${API_URL}/api/v1${input}`, {
+  const response = await fetch(`/api/v1${input}`, {
     ...init,
     headers: {
       ...init?.headers,
       'Content-Type': 'application/json',
-      ...(session
-        ? { Authorization: `Bearer ${session.apiToken}` }
-        : undefined),
+      // ...(session
+      //   ? { Authorization: `Bearer ${session.apiToken}` }
+      //   : undefined),
     },
     body: init?.body ? JSON.stringify(init.body) : undefined,
   });
@@ -33,7 +34,5 @@ export async function apiFetch<T = unknown, U = unknown>(
   return {
     status: response.status,
     data: (await response.json().catch(() => ({}))) as T,
-    // status: 200,
-    // data: {} as T,
   };
 }

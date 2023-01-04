@@ -10,6 +10,7 @@ export default async function Home() {
   const session = await getSession();
 
   console.log({ session });
+  fetch('/api/v1/status/test').then(console.log);
 
   return (
     <div className={styles.container}>
@@ -25,7 +26,7 @@ export default async function Home() {
           <code className={styles.code}>pages/index.tsx</code>
         </p>
 
-        {session.status === 'unauthenticated' && (
+        {/* {session.status === 'unauthenticated' && (
           <div className={styles.auth}>
             <a href="/api/auth/signin" onClick={() => signIn()}>
               Sign In
@@ -41,7 +42,7 @@ export default async function Home() {
               </a>
             </div>
           </div>
-        )}
+        )} */}
 
         <div className={styles.grid}>
           <a href="https://nextjs.org/docs" className={styles.card}>
