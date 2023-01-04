@@ -1,4 +1,4 @@
-import { getSession } from 'next-auth/react';
+import { getSession } from '@web/lib/session';
 import { API_URL } from './constants';
 
 export interface ApiFetchResponse<T> {
@@ -33,5 +33,7 @@ export async function apiFetch<T = unknown, U = unknown>(
   return {
     status: response.status,
     data: (await response.json().catch(() => ({}))) as T,
+    // status: 200,
+    // data: {} as T,
   };
 }
