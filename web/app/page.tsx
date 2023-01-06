@@ -1,16 +1,13 @@
-import { signIn, signOut } from 'next-auth/react';
 import Image from 'next/image';
 import React from 'react';
 
 import StatusChecker from '@web/components/StatusChecker';
+import UserOptions from '@web/components/UserOptions';
 import styles from '@web/styles/Home.module.css';
 import { getSession } from '@web/lib/session';
 
 export default async function Home() {
   const session = await getSession();
-
-  console.log({ session });
-  fetch('/api/v1/status/test').then(console.log);
 
   return (
     <div className={styles.container}>
@@ -21,28 +18,12 @@ export default async function Home() {
 
         <StatusChecker />
 
+        <UserOptions />
+
         <p className={styles.description}>
           Get started by editing{' '}
           <code className={styles.code}>pages/index.tsx</code>
         </p>
-
-        {/* {session.status === 'unauthenticated' && (
-          <div className={styles.auth}>
-            <a href="/api/auth/signin" onClick={() => signIn()}>
-              Sign In
-            </a>
-          </div>
-        )}
-        {session.status === 'authenticated' && (
-          <div className={styles.auth}>
-            <div>Hey, {session.data.user.name || session.data.user.email}</div>
-            <div>
-              <a href="/api/auth/signout" onClick={() => signOut()}>
-                Sign out
-              </a>
-            </div>
-          </div>
-        )} */}
 
         <div className={styles.grid}>
           <a href="https://nextjs.org/docs" className={styles.card}>

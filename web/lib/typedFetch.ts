@@ -1,5 +1,4 @@
-import { getSession } from '@web/lib/session';
-import { API_URL } from './constants';
+import { PUBLIC_URL } from '@web/lib/constants';
 
 export interface ApiFetchResponse<T> {
   status: number;
@@ -16,17 +15,11 @@ export async function apiFetch<T = unknown, U = unknown>(
   input: RequestInfo | URL,
   init?: Omit<RequestInit, 'body'> & { body?: U },
 ): Promise<ApiFetchResponse<T>> {
-  // const session = await getSession();
-
-  // const response = await fetch(`${API_URL}/api/v1${input}`, {
-  const response = await fetch(`/api/v1${input}`, {
+  const response = await fetch(`${PUBLIC_URL}/api/v1${input}`, {
     ...init,
     headers: {
       ...init?.headers,
       'Content-Type': 'application/json',
-      // ...(session
-      //   ? { Authorization: `Bearer ${session.apiToken}` }
-      //   : undefined),
     },
     body: init?.body ? JSON.stringify(init.body) : undefined,
   });

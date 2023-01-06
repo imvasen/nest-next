@@ -28,7 +28,9 @@ const providers = (() => {
   return px;
 })();
 
-export const authOptions: NextAuthOptions = {
+export const authOptions: NextAuthOptions & {
+  callbacks: Partial<CallbacksOptions<GoogleProfile>>;
+} = {
   providers,
   session: { strategy: 'jwt' },
   callbacks: {
