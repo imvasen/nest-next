@@ -1,15 +1,11 @@
 'use client';
 
-import { getSession, signIn, signOut } from 'next-auth/react';
-import { Session } from 'next-auth';
+import { useSession } from '@web/lib/hooks/session';
+import { signIn, signOut } from 'next-auth/react';
 import React from 'react';
 
 export default function UserOptions() {
-  const [session, setSession] = React.useState<Session | null>();
-
-  React.useEffect(() => {
-    getSession().then(setSession);
-  }, []);
+  const session = useSession();
 
   return (
     <div>
